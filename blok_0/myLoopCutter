@@ -1,0 +1,35 @@
+#! /bin/bash
+
+#
+# This script is freaking awesome! 
+#
+
+if [ $# -lt 1 ]; then
+  echo "$0: How to use:"
+  echo "Insert file name, and how many clips you want"
+exit
+else
+  echo "The Chosen File: $1"
+  echo "Will be cut into: $2 pieces."
+fi
+
+# Make al dem variables
+FILE=`find ~/ -name "$1"`
+SAMPLES=`soxi -s ${FILE}`
+WAAR=`dirname ${FILE}`
+CLIPSIZE=`expr ${SAMPLES} / $2`
+
+# Trim and create files.
+for (( i=0 ; i <= $2-1; i++))
+do
+let x=$i*${CLIPSIZE}
+let y=$i+1
+let x2=$y*${CLIPSIZE}
+
+sox ${FILE} ${i}clip.wav trim =${x}s =${x2}s
+mv ${i}clip.wav $WAAR
+
+echo "${i}clip.wav is gemakt."
+       
+done
+
