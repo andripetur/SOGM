@@ -2,7 +2,7 @@
 
 #
 # This script is freaking awesome! 
-#
+# like totally super freeeaaaking awesome.
 
 if [ $# -lt 1 ]; then
   echo "$0: How to use:"
