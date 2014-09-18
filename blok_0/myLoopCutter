@@ -29,7 +29,7 @@ let x2=$y*${CLIPSIZE}
 sox ${FILE} ${i}clip.wav trim =${x}s =${x2}s
 mv ${i}clip.wav $WAAR
 
-echo "${i}clip.wav is gemakt."
+echo "${i}clip.wav is gemaakt."
        
 done
 
