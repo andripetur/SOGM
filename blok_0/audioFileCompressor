@@ -1,0 +1,59 @@
+#! /bin/bash
+
+# This script compressed uncompressed audio files.
+# Bro do you even compress?!
+
+#Make variables
+inputType=$1
+outputType=$2
+
+if [ $# -lt 2 ]; then
+  echo "$0: How to use:"
+  echo "Argument 1: Type of input file (aiff aif wav)"
+  echo "Argument 2: Type of output file (mp3 flac ogg)"
+  echo 
+
+exit
+
+else 
+  echo "The Chosen File Type $inputType"
+  echo "Will be compressed into $outputType files"
+fi
+
+echo
+echo "These files will be compressed:"
+echo
+ls -a *."$inputType"
+echo
+
+read -p "Do you want to continue?(y/n) " -n 1 -r
+echo 
+
+if [[ $REPLY =~ ^[Nn]$ ]]
+then 
+echo
+echo "Fine, I didn't wanna compress them anyway!"
+echo " .... this program will be shut down"
+echo
+exit
+fi
+
+if [[ $REPLY =~ ^[Yy]$ ]]
+then 
+
+for fileName in *."$inputType"
+do 
+echo
+echo "Converting: ${fileName}"
+echo
+
+lame -V2 "${fileName}" "`basename "${fileName}" $inputType`$outputType"
+done
+
+echo
+echo "De mission is complete." 
+echo
+exit
+fi
+
+
