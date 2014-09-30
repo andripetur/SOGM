@@ -1,12 +1,14 @@
 #! /bin/bash
 
 #
-# This script is freaking awesome! 
-# like totally super freeeaaaking awesome.
+# Andri Pétur Þrastarson
+#
+# A script that slices audio files. 
+# - now with three arguments! ! !
 
-if [ $# -lt 1 ]; then
+if [ $# -lt 3 ]; then
   echo "$0: How to use:"
-  echo "Insert file name, and how many clips you want"
+  echo "Insert file path, how many clips you want, and the file extension"
 exit
 else
   echo "The Chosen File: $1"
@@ -14,9 +16,11 @@ else
 fi
 
 # Make al dem variables
-FILE=`find ~/ -name "$1"`
-SAMPLES=`soxi -s ${FILE}`
-WAAR=`dirname ${FILE}`
+EXTENSION=$3
+FILEPATH=$1
+FILENAME=`basename "${FILEPATH}" ${EXTENSION}` 
+SAMPLES=`soxi -s "${FILEPATH}"`
+WAAR=`dirname "${FILEPATH}"`
 CLIPSIZE=`expr ${SAMPLES} / $2`
 
 # Trim and create files.
@@ -26,10 +30,10 @@ let x=$i*${CLIPSIZE}
 let y=$i+1
 let x2=$y*${CLIPSIZE}
 
-sox ${FILE} ${i}clip.wav trim =${x}s =${x2}s
-mv ${i}clip.wav $WAAR
+sox "${FILEPATH}" "${FILENAME}.${i}clip.wav" trim =${x}s =${x2}s
+mv "${FILENAME}.${i}clip.wav" "$WAAR"
 
-echo "${i}clip.wav is gemaakt."
+echo "${FILENAME}.${i}clip.wav is gemaakt."
        
 done
 

@@ -55,9 +55,9 @@ echo
 
 convertedFileName="`basename "${fileName}" $inputType`$outputType"
 
-lame -V2 "${fileName}" $convertedFileName
+lame -V2 "${fileName}" "$convertedFileName"
 
-mv $convertedFileName ./"${newDir}"
+mv "$convertedFileName" ./"${newDir}"
 
 done
 
