@@ -1,10 +1,8 @@
 #include <sndfile.h>
 #include <stdio.h>
 #include <libgen.h>
-#include <cstdlib>
 #include <string>
 #include <math.h>
-
 #include <iostream>
 
 enum {ARG_NAME = 0, ARG_PATH, ARG_OUT_NAME, ARG_GAIN, NUM_ARGS};
@@ -34,14 +32,56 @@ char* get_ext(char* file){
     return file;
 }
 
+void notEnoughArgumentsError() {
+    std::cout << std::endl;
+    std::cout << "This program has performed an illegal operation and will be shut down! " << std::endl;
+    std::cout << std::endl;
+    std::cout << "Just kidding... but seriously. " << std::endl;
+    std::cout << "This program needs 3 parameters to run: " << std::endl;
+    std::cout << "1: Filepath" << std::endl;
+    std::cout << "2: New filename" << std::endl;
+    std::cout << "3: Gain" << std::endl;
+    std::cout << std::endl;
+}
+
+void gainError() {
+    std::cout << std::endl;
+    std::cout << "The computer says no. " << std::endl;
+    std::cout << std::endl;
+    std::cout << "Gain needs to be higher than 0.00000000001 and not higher than 1." << std::endl;
+    std::cout << std::endl;
+    
+}
+
+void sameFileNameError() {
+    std::cout << std::endl;
+    std::cout << "The normalization could not be completed " << std::endl;
+    std::cout << std::endl;
+    std::cout << "New filename can't be the same as old name " << std::endl;
+    std::cout << "Please try again, with another name." << std::endl;
+    std::cout << std::endl;
+}
 
 
-int main(int agc, char** argv)
+int main(int argc, char** argv)
 {
+    //----------Check if enough arguments errors--------------------
+    if (argc != NUM_ARGS) {
+        notEnoughArgumentsError();
+        return -1;
+    }
+    
     //----------Get User Variables----------------------------------
     pathToInFile = argv[ARG_PATH]; //path to inFile
     nameOfOutFile= argv[ARG_OUT_NAME]; //name of outFile.
     destinationGain = atof(argv[ARG_GAIN]); //gain to normalize to.
+    
+    
+    //----------Check if gain format is right---------------------
+    if ( destinationGain == 0 || destinationGain > 1 ) {
+        gainError();
+        return -1;
+    }
 
     //----------Make Path to out file-------------------------------
     pathToOutFile = dirname(pathToInFile);
@@ -49,11 +89,11 @@ int main(int agc, char** argv)
     strcat(pathToOutFile, nameOfOutFile);
     
     nameOfInFile = basename(pathToInFile);
+    
     //----------Load Read File------------------------------------------
     inFile = sf_open(pathToInFile, SFM_READ, &sfInfo);
     
     //-------------Get some info on the file----------------------------
-    
     channels = sfInfo.channels;
     frames = sfInfo.frames;
     samplerate = sfInfo.samplerate;
@@ -67,11 +107,12 @@ int main(int agc, char** argv)
     float writeBuffer[bufferSize];
     
     //-------------Find max gain-------------------------------------
-    for (int i = 0; i < frames; i+=vectorSize) {
-        
+    for (int i = 0; i < frames; i+=vectorSize)
+    {
         sf_readf_float(inFile, buffer, vectorSize);
         
-        for (int b = 0; b < bufferSize; b++) {
+        for (int b = 0; b < bufferSize; b++)
+        {
             if(fabs(buffer[b]) > maxGain)
             {
                 maxGain = fabs(buffer[b]);
@@ -86,13 +127,21 @@ int main(int agc, char** argv)
     multiplier = destinationGain/maxGain;
     
     
-    //------------Make The Outfile ------------------------------------
+    //------------Add File extension ------------------------------------
     strcat(pathToOutFile, fileExtension); // add file extension
     strcat(nameOfOutFile, fileExtension); // add to out file name
-    //strcat(nameOfOutFile, fileExtension); // add to orginal file
-    outFile= sf_open(pathToOutFile, SFM_WRITE, &sfInfo); //Make the outFile
-
     
+    //----------Check if file has another name ------------------------
+    if (strcmp (nameOfInFile,nameOfOutFile) == 0) {
+        sameFileNameError();
+        sf_close(inFile);
+        
+        return -1;
+    }
+    
+    //------------Make the outFile--------------------------------------
+    outFile= sf_open(pathToOutFile, SFM_WRITE, &sfInfo);
+
     //------------Write to new file------------------------------------
     for(int i = 0; i < frames; i+=vectorSize) {
         
@@ -130,6 +179,3 @@ int main(int agc, char** argv)
     return 0;
 
 } // main
-
-// if (argc == NUM_ARGS) {
-//    } else {

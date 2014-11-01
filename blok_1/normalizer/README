@@ -1,0 +1,11 @@
+// Normalizer
+// Andri Pétur Þrastarson
+
+A simple audio normalizer using libsndfile. 
+
+The program needs three parameters to run: 
+	Filepath of file to be normalized. 
+	Name of new file. (Needs to be different from inputfile name)
+	Gain. (between 0.0000001 and 1); 
+
+Enjoy. 
