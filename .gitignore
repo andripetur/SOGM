@@ -3,3 +3,11 @@
 *.wav
 *.DS_Store
 *.swp
+*.o
+
+"blok_1/Practicum1 glosur.cpp"
+blok_1/sineClass/
+blok_1/song/
+blok_0/helloworld/
+blok_0/libtest.cpp
+blok_0/make_test/
