@@ -62,10 +62,15 @@ void sameFileNameError() {
     std::cout << std::endl;
 }
 
+void loadFileError() {
+    std::cout << std::endl;
+    std::cout << "An error occured loading the file. " << std::endl;
+    std::cout << std::endl;
+}
 
 int main(int argc, char** argv)
 {
-    //----------Check if enough arguments errors--------------------
+    //----------Check if there are enough arguments --------------------
     if (argc != NUM_ARGS) {
         notEnoughArgumentsError();
         return -1;
@@ -92,6 +97,12 @@ int main(int argc, char** argv)
     
     //----------Load Read File------------------------------------------
     inFile = sf_open(pathToInFile, SFM_READ, &sfInfo);
+    
+    //- check for file load error
+    if(inFile == NULL) {
+        loadFileError();
+        return -1;
+    }
     
     //-------------Get some info on the file----------------------------
     channels = sfInfo.channels;
