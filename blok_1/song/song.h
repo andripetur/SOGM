@@ -1,14 +1,14 @@
+#pragma once
+
 #include <string>
+#include <iostream>
 
 using namespace std;
 
+
+// Parent class
 class Song
 {
-
-private: 
-string title;
-unsigned short year;
-
 public:
   void setTitle(string newTitle);
   int setYear(unsigned short newYear);
@@ -16,6 +16,10 @@ public:
   string getTitle();
   unsigned short getYear();
 
+private: 
+  string title;
+  unsigned short year;
 
 }; // Song{}
+
 

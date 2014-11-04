@@ -1,10 +1,11 @@
 CC = g++
 CFLAGS = -Wall
+OBJ= song.o playablesong.o notatedsong.o songmain.o
 
 all: song
 
-song: song.o songmain.o
-	$(CC) -o $@ $(CFLAGS) song.o songmain.o
+song: $(OBJ)
+	$(CC) -o $@ $(CFLAGS) $(OBJ)
 
 .cpp.o: 
 	$(CC) -c $< $(CFLAGS)
