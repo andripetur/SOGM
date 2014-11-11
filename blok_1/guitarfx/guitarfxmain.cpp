@@ -30,6 +30,8 @@
 
 #include <iostream>
 #include "amplifier.h"
+#include "tremolo.h"
+#include "distortion.h"
 
 #define BUFFERSIZE 10
 
@@ -38,9 +40,13 @@ using namespace std;
 
 int main()
 {
-Amplifier amp;
+    Amplifier amp;
+    Tremolo trem;
+    Distortion dist;
 
-  amp.show_level();
+    amp.showLevel();
+    trem.process();
+    dist.process(0.5);
 
 } // main()
 

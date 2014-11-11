@@ -5,7 +5,20 @@ Amplifier::Amplifier()
     this->level=5; // default
 }
 
-void Amplifier::show_level()
+void Amplifier::showLevel()
 {
+    cout << "Amplifier: " << endl;
     cout << "Amplifier level: " << level << endl;
+    cout <<" " << endl;
+}
+
+long Amplifier::getLevel()
+{
+    return level;
+}
+
+void Amplifier::process()
+{
+    cout << "I'm processing " << endl;
+
 }
