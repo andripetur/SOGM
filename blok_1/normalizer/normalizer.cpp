@@ -175,10 +175,18 @@ int main(int argc, char** argv)
     int minutes = lengthInSeconds / 60;
     int seconds = lengthInSeconds - (minutes*60);
     
+    float dB = 20*log10(maxGain);
+    float new_dB = 20*log10(destinationGain);
+    
     std::cout << std::endl;
     std::cout << "Orginal Name: "<< nameOfInFile << std::endl;
     std::cout << "Normalized Name: "<< nameOfOutFile << std::endl;
     std::cout << std::endl;
+    
+    std::cout << "Old Max Peak : "<< dB << "dB"<< std::endl;
+    std::cout << "New Max Peak : "<< new_dB << "dB"<< std:: endl;
+    std::cout << std::endl;
+    
     std::cout << "Length: "<< minutes << "."<< seconds << std::endl;
     std::cout << "Channels: "<< channels << std::endl;
     std::cout << "Samplerate: "<< samplerate << std::endl;
