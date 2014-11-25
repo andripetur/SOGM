@@ -4,8 +4,8 @@
 *.DS_Store
 *.swp
 *.o
+*glosur.cpp
 
-"blok_1/Practicum1 glosur.cpp"
 blok_1/sineClass/
 blok_0/helloworld/
 blok_0/libtest.cpp
