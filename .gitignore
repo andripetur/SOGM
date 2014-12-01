@@ -6,6 +6,14 @@
 *.o
 *glosur.cpp
 
+// For xCode 
+resources/
+build/
+.Trashes
+*.swp
+*.lock
+*~.nib
+
 blok_1/sineClass/
 blok_0/helloworld/
 blok_0/libtest.cpp

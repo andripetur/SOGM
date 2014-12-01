@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>BF2F725C-5E34-43C7-A52C-EDA16C0AB987</string>
+	<key>IDESourceControlProjectName</key>
+	<string>myFirstJuce</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>E4D0947B-45DD-49B5-8F05-8D6AF50DC370</key>
+		<string>ssh://github.com/andripetur/SOGM.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>blok_1/myFirstJuice/Builds/MacOSX/myFirstJuce.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>E4D0947B-45DD-49B5-8F05-8D6AF50DC370</key>
+		<string>../../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/andripetur/SOGM.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>E4D0947B-45DD-49B5-8F05-8D6AF50DC370</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E4D0947B-45DD-49B5-8F05-8D6AF50DC370</string>
+			<key>IDESourceControlWCCName</key>
+			<string>sogm_huiswerk</string>
+		</dict>
+	</array>
+</dict>
+</plist>
