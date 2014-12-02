@@ -7,8 +7,9 @@
 //
 
 #include "AutoGain.h"
+#include <math.h>
 
-void AutoGain::Process(float **buffer, int channels, int frames)
+void AutoGain::process(float **buffer, int channels, int frames)
 {
     float avg = averageValue(buffer, channels, frames);
     
@@ -36,7 +37,7 @@ float AutoGain::averageValue(float **buffer, int channels, int frames)
     
     for (int ch = 0; ch < channels; ch++) {
         for (int fr = 0; fr < frames; fr++) {
-            som += fabs(buffer[ch][fr]);
+            sum += fabs(buffer[ch][fr]);
         }
     }
     
