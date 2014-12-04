@@ -22,6 +22,8 @@ MainContentComponent::MainContentComponent()
     middleX = getWidth()/2;
     middleY = getHeight()/2;
     
+    filter.printCoeffs();
+    
 }
 
 MainContentComponent::~MainContentComponent()
@@ -44,14 +46,18 @@ void MainContentComponent::paint (Graphics& g)
 
 void MainContentComponent::audioCallback(float **buffer, int channels, int frames)
 {
-    for (int ch=0; ch < channels; ch++) {
-        for (int fr = 0; fr < frames; fr++) {
-            
-//            buffer[ch][fr] = tanh(buffer[ch][fr]);
-            currentSample = buffer [ch][fr];
-            buffer[ch][fr] = 0;
-        }
-    }
+    //CrazyDrawing
+    currentSample = buffer [channels-1][frames-1];
+
+    filter.process(buffer, channels, frames);
+    gain.process(buffer, channels, frames);
+    
+    gain.printGain();
+    
+    /*
+    float g = gain.averageValue(buffer, channels, frames);
+    std::cout <<  "gain: " << g << std::endl;
+    */
 }
 
 
@@ -69,4 +75,6 @@ void MainContentComponent::resized()
     // This is called when the MainContentComponent is resized.
     // If you add any child components, this is where you should
     // update their positions.
+    middleX = getWidth()/2;
+    middleY = getHeight()/2;
 }

@@ -11,6 +11,7 @@
 
 Filter::Filter()
 {
+    setFilterFreq(8000);
     
     for (int i = 0; i < 3; i++) {
         leftBuffer[i] = 0.0;
@@ -20,6 +21,12 @@ Filter::Filter()
         rightOutBuffer[i] = 0.0;
     }
     
+//    a0 = 0.2513790015131591;
+//    a1 = 0.5027580030263182;
+//    a2 = 0.2513790015131591;
+//    b1 = -0.17124971441396285;
+//    b2 = 0.1767567204665992;
+//    b0 = 0.9;
 }
 
 void Filter::setFilterMode(int filterMode)
@@ -34,7 +41,8 @@ void Filter::setFilterFreq(double freq)
     lastFilterFreq = filterFreq;
     filterFreq = freq;
     
-    CalculateCoeff(freq);
+   CalculateCoeff(filterFreq);
+    
 }
 
 void Filter::process(float **buffer, int channels, int frames)
@@ -46,14 +54,23 @@ void Filter::process(float **buffer, int channels, int frames)
                 //Shift all samples to the left. 
                 leftBuffer[0] = leftBuffer[1];
                 leftBuffer[1] = leftBuffer[2];
-                buffer[ch][fr] = leftBuffer[2];
+                
+                leftOutBuffer[0] = leftOutBuffer[1];
+                leftOutBuffer[1] = leftOutBuffer[2];
+                
+                leftBuffer[2] = buffer[ch][fr];
                 
                 buffer[ch][fr] = calculateSample(leftBuffer, leftOutBuffer);
+                
             } else if (ch == 1) {
                 //Shift all samples to the left.
                 rightBuffer[0] = rightBuffer[1];
                 rightBuffer[1] = rightBuffer[2];
-                buffer[ch][fr] = rightBuffer[2];
+                
+                rightOutBuffer[0] = rightOutBuffer[1];
+                rightOutBuffer[1] = rightOutBuffer[2];
+                
+                rightBuffer[2] = buffer[ch][fr];
                 
                 buffer[ch][fr] = calculateSample(rightBuffer, rightOutBuffer);
             }
@@ -80,7 +97,9 @@ float Filter::calculateSample(float x[], float y[])
 
 void Filter::CalculateCoeff(double Fc)
 {
-    double Q = 1; 
+    Fc /= 44100;
+    
+    double Q = 0.7071;
     double norm;
     double K = tan(M_PI * Fc);
 
@@ -90,5 +109,13 @@ void Filter::CalculateCoeff(double Fc)
     a2 = a0;
     b1 = 2 * (K * K - 1) * norm;
     b2 = (1 - K / Q + K * K) * norm;
+    
+    b0 = 0.9;
 
+}
+
+void Filter::printCoeffs() {
+    std::cout << "a0: " << a0 << " a1: " << a1 << " a2: " << a2 << std::endl;
+    std::cout << "b0: " << b0 << " b1: " << b1 << " b2: " << b2 << std::endl;
+    std::cout << std::endl;
 }

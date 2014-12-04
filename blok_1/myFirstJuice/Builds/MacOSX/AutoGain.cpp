@@ -9,8 +9,18 @@
 #include "AutoGain.h"
 #include <math.h>
 
+AutoGain::AutoGain()
+{
+}
+
 void AutoGain::process(float **buffer, int channels, int frames)
 {
+    for (int ch = 0; ch < channels; ch++) {
+        for (int fr = 0; fr < frames; fr++) {
+            buffer[ch][fr] *= gainer;
+        }
+    }//for
+    
     float avg = averageValue(buffer, channels, frames);
     
     if (avg < feedbackLowLimit) {
@@ -19,12 +29,6 @@ void AutoGain::process(float **buffer, int channels, int frames)
     {
         gainer *= 0.8;
     }
-    
-    for (int ch = 0; ch < channels; ch++) {
-        for (int fr = 0; fr < frames; fr++) {
-            buffer[ch][fr] *= gainer;
-        }
-    }//for
     
 }//Process()
 
@@ -44,3 +48,9 @@ float AutoGain::averageValue(float **buffer, int channels, int frames)
     return sum / (float)NrOfSamples;
     
 }// avgValue
+
+void AutoGain::printGain()
+{
+    std::cout << "Gain: " << gainer << std::endl;
+    std::cout << std::endl;
+}

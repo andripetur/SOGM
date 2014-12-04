@@ -10,6 +10,7 @@
 #define __myFirstJuce__Filter__
 
 #include <math.h>
+#include <iostream>
 
 class Filter
 {
@@ -18,6 +19,7 @@ public:
     void setFilterMode(int filterMode);
     void setFilterFreq(double freq);
     
+    void printCoeffs(); 
     void process(float **buffer, int channels, int frames);
     
 private:

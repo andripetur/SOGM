@@ -2369,12 +2369,12 @@
 				D197132EC3586975411F7349 /* MainComponent.h */,
 				AB3150853D77DD4BF7267D1D /* MainComponent.cpp */,
 				F2DE2ABB32E83DBFD665FA6C /* Main.cpp */,
-				1418979C1A278AF70092B236 /* AudioCallback.cpp */,
-				1418979D1A278AF70092B236 /* AudioCallback.h */,
 				1456B2B21A2CC01C009B2333 /* AutoGain.cpp */,
 				1456B2B31A2CC01C009B2333 /* AutoGain.h */,
 				1456B2B81A2CCB96009B2333 /* Filter.cpp */,
 				1456B2B91A2CCB96009B2333 /* Filter.h */,
+				1418979C1A278AF70092B236 /* AudioCallback.cpp */,
+				1418979D1A278AF70092B236 /* AudioCallback.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";

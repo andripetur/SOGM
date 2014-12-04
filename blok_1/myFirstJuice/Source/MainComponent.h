@@ -12,6 +12,8 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "AudioCallback.h"
+#include "filter.h"
+#include "AutoGain.h"
 
 
 //==============================================================================
@@ -38,6 +40,12 @@ private:
     float currentSample; 
     int middleX;
     int middleY;
+    
+    double freq = 100; 
+    
+    Filter filter;
+    AutoGain gain;
+    
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };
