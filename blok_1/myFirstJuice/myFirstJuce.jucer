@@ -5,8 +5,6 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="Hv6Kxz" name="myFirstJuce">
     <GROUP id="{6E8FDF7A-85DE-2BC6-0D1C-F9498CEC723E}" name="Source">
-      <FILE id="ZOToey" name="GuiDinges.cpp" compile="1" resource="0" file="Source/GuiDinges.cpp"/>
-      <FILE id="mM14Gb" name="GuiDinges.h" compile="0" resource="0" file="Source/GuiDinges.h"/>
       <FILE id="kdKMNg" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
       <FILE id="jQxh3l" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>

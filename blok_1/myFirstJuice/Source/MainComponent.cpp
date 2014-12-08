@@ -10,10 +10,29 @@
 #include <math.h>
 #include <stdio.h>
 
+void *StartOsc(void *threadid)
+{
+    long tid;
+    tid = (long)threadid;
+    //cout << "Hello World! Thread ID, " << tid << endl;
+    system("/Users/andripetur/HKU/2_Ár/Sogm_files/SendMultiTouches/sendMultiTouches");
+//    execl( "/Users/andripetur/HKU/2_Ár/Sogm_files/SendMultiTouches/sendMultiTouches", (char*)0 );
+    pthread_exit(NULL);
+}
+
+void *quitOsc(void *threadid)
+{
+    system("oscKiller");
+    pthread_exit(NULL);
+}
+
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
 {
+    pthread_create(&threads[0], NULL, StartOsc, (void *)0);
+//    OSC_PID = getProcIdByName("sendMultiTouches");
+//    std::cout << "PID: " << OSC_PID << std::endl;
     startAudioCallback();
     
     setSize (500, 400);
@@ -29,6 +48,12 @@ MainContentComponent::MainContentComponent()
 MainContentComponent::~MainContentComponent()
 {
     stopAudioCallback();
+    pthread_cancel(threads[0]); //close thread
+    
+//    pthread_create(&threads[1], NULL, quitOsc, (void *)1);
+//    system("oscKiller");
+
+    
 }
 
 void MainContentComponent::paint (Graphics& g)
