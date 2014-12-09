@@ -28,12 +28,13 @@ void *quitOsc(void *threadid)
 
 
 //==============================================================================
-MainContentComponent::MainContentComponent()
+MainContentComponent::MainContentComponent() : listener(this)
 {
     pthread_create(&threads[0], NULL, StartOsc, (void *)0);
-//    OSC_PID = getProcIdByName("sendMultiTouches");
-//    std::cout << "PID: " << OSC_PID << std::endl;
+
     startAudioCallback();
+    listener.startThread(10);
+    DBG("OSC thread started");
     
     setSize (500, 400);
     startTimer(33);
@@ -64,20 +65,28 @@ void MainContentComponent::paint (Graphics& g)
     g.setColour (Colours::deeppink);
     
     float offsetWidth = fabs(currentSample) * 50;
-
+    
+    if(newMsg){
+    std::cout << "x: " << xPosOnTrackPad <<" "<< "y: " << yPosOnTrackPad << std::endl;
+    setNewMsg(false);
+    }
+    
     g.drawEllipse(middleX, middleY, offsetWidth, offsetWidth, 50);
+    
     
 }
 
 void MainContentComponent::audioCallback(float **buffer, int channels, int frames)
 {
     //CrazyDrawing
+    
+    
     currentSample = buffer [channels-1][frames-1];
 
     filter.process(buffer, channels, frames);
     gain.process(buffer, channels, frames);
     
-    gain.printGain();
+//    gain.printGain();
     
     /*
     float g = gain.averageValue(buffer, channels, frames);
@@ -95,6 +104,20 @@ void MainContentComponent::timerCallback()
     repaint();
 }
 
+void MainContentComponent::oscCallback(float x, float y)
+{
+    xPosOnTrackPad = x;
+    yPosOnTrackPad = y;
+    
+    setNewMsg(true);
+}
+
+void MainContentComponent::setNewMsg(bool nState)
+{
+    newMsg = nState;
+}
+
+
 void MainContentComponent::resized()
 {
     // This is called when the MainContentComponent is resized.
@@ -103,3 +126,4 @@ void MainContentComponent::resized()
     middleX = getWidth()/2;
     middleY = getHeight()/2;
 }
+

@@ -9,14 +9,13 @@
 #ifndef MAINCOMPONENT_H_INCLUDED
 #define MAINCOMPONENT_H_INCLUDED
 
-
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "AudioCallback.h"
 #include "filter.h"
 #include "AutoGain.h"
+#include "oscRecieve.h"
 #include <stdlib.h>
 #include <pthread.h>
-//#include <unistd.h>
 
 
 //==============================================================================
@@ -24,7 +23,7 @@
     This component lives inside our window, and this is where you should put all
     your controls and content.
 */
-class MainContentComponent   : public Component, private Timer , private AudioCallback
+class MainContentComponent   : public Component, private Timer , public ChangeBroadcaster, private AudioCallback
 {
 public:
     //==============================================================================
@@ -34,20 +33,30 @@ public:
     void paint (Graphics&);
     void resized();
     
+    void oscCallback(float x, float y);
     void mouseDown(const MouseEvent& event);
+    
+    void setNewMsg(bool nState);
     
 private:
     void timerCallback();
     void audioCallback (float** buffer, int channels, int frames);
     
+    bool newMsg = false;
+    
     float currentSample; 
     int middleX;
     int middleY;
     
+    float xPosOnTrackPad;
+    float yPosOnTrackPad;
+    
     double freq = 100;
     
     pthread_t threads[2];
-    int OSC_PID; 
+    int OSC_PID;
+    
+    oscListener listener;
     
     Filter filter;
     AutoGain gain;
