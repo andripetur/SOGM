@@ -14,6 +14,8 @@
 #include "filter.h"
 #include "AutoGain.h"
 #include "oscRecieve.h"
+#include "sendThread.h" 
+
 #include <stdlib.h>
 #include <pthread.h>
 
@@ -34,6 +36,8 @@ public:
     void resized();
     
     void oscCallback(float x, float y);
+    void mouseCallback(int state, float x, float y);
+    
     void mouseDown(const MouseEvent& event);
     
     void setNewMsg(bool nState);
@@ -57,6 +61,8 @@ private:
     int OSC_PID;
     
     oscListener listener;
+//    trackPadListener trackpad;
+    sendThread sender;
     
     Filter filter;
     AutoGain gain;

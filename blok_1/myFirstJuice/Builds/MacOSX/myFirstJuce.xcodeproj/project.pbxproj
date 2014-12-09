@@ -10,13 +10,14 @@
 		00FD373B67ADBEF59E1ADF09 /* juce_graphics.mm in Sources */ = {isa = PBXBuildFile; fileRef = B43AFD3A9CFE1B999340EDBA /* juce_graphics.mm */; };
 		05573A40DEE472C5D057E1B0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92A5AA32D8CCCFEFD909F4D /* QuartzCore.framework */; };
 		0E8CD4FAFFB0810C58C07702 /* juce_audio_basics.mm in Sources */ = {isa = PBXBuildFile; fileRef = A49E468BA0C80B478B447102 /* juce_audio_basics.mm */; };
+		142714001A37028F00EF6891 /* sendThread.h in Sources */ = {isa = PBXBuildFile; fileRef = 142713FF1A36FE8F00EF6891 /* sendThread.h */; };
+		1427140F1A378C7700EF6891 /* MultitouchSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1427140E1A378C7700EF6891 /* MultitouchSupport.framework */; };
+		142714111A379F6800EF6891 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F3D3944FDEE1C55EC0670C /* Cocoa.framework */; };
 		1447F74A1A363DB500E32F30 /* liboscpack.so.1.1.0 in Frameworks */ = {isa = PBXBuildFile; fileRef = 1447F7491A363DB500E32F30 /* liboscpack.so.1.1.0 */; };
 		147628031A35C22D0037EB17 /* AudioCallback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 147627FB1A35C22D0037EB17 /* AudioCallback.cpp */; };
 		147628041A35C22D0037EB17 /* AutoGain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 147627FD1A35C22D0037EB17 /* AutoGain.cpp */; };
-		147628051A35C22D0037EB17 /* File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 147627FF1A35C22D0037EB17 /* File.cpp */; };
 		147628061A35C22D0037EB17 /* Filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 147628011A35C22D0037EB17 /* Filter.cpp */; };
 		147628091A35CD2F0037EB17 /* oscRecieve.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 147628071A35CD2F0037EB17 /* oscRecieve.cpp */; };
-		1F7985E89BF46002E8119A58 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F3D3944FDEE1C55EC0670C /* Cocoa.framework */; };
 		2F26BB2BFD26A95904322AA7 /* juce_events.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0C7A77D6506441BFD3D3B0E4 /* juce_events.mm */; };
 		3AEA5ABB29B18784D33BFC4C /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23A01F9309B50A0E17D75FA1 /* CoreAudio.framework */; };
 		3E3FA1BD38CD41492ED4B035 /* juce_audio_processors.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEE403FBA47C39FCE0C798C4 /* juce_audio_processors.mm */; };
@@ -118,6 +119,10 @@
 		138132682D1C4419917A9CBD /* juce_AudioIODeviceType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_AudioIODeviceType.h; path = ../../JuceLibraryCode/modules/juce_audio_devices/audio_io/juce_AudioIODeviceType.h; sourceTree = SOURCE_ROOT; };
 		138F8A2E0D2EE2762C56425A /* juce_BasicNativeHeaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_BasicNativeHeaders.h; path = ../../JuceLibraryCode/modules/juce_core/native/juce_BasicNativeHeaders.h; sourceTree = SOURCE_ROOT; };
 		13FB28DEC053F743E0769BB1 /* juce_opengl.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = juce_opengl.mm; path = ../../JuceLibraryCode/modules/juce_opengl/juce_opengl.mm; sourceTree = SOURCE_ROOT; };
+		142713FF1A36FE8F00EF6891 /* sendThread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sendThread.h; sourceTree = "<group>"; };
+		142714041A37394D00EF6891 /* sendMultiTouches.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = sendMultiTouches.mm; sourceTree = "<group>"; };
+		1427140C1A378B3A00EF6891 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1427140E1A378C7700EF6891 /* MultitouchSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultitouchSupport.framework; path = ../../../../../../../../../System/Library/PrivateFrameworks/MultitouchSupport.framework; sourceTree = "<group>"; };
 		142FCCCD0AFE11D24E0AF368 /* juce_SystemStats.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_SystemStats.h; path = ../../JuceLibraryCode/modules/juce_core/system/juce_SystemStats.h; sourceTree = SOURCE_ROOT; };
 		1447F7491A363DB500E32F30 /* liboscpack.so.1.1.0 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = liboscpack.so.1.1.0; sourceTree = "<group>"; };
 		1447F74D1A363EF000E32F30 /* IpEndpointName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IpEndpointName.h; sourceTree = "<group>"; };
@@ -138,8 +143,6 @@
 		147627FC1A35C22D0037EB17 /* AudioCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioCallback.h; sourceTree = "<group>"; };
 		147627FD1A35C22D0037EB17 /* AutoGain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AutoGain.cpp; sourceTree = "<group>"; };
 		147627FE1A35C22D0037EB17 /* AutoGain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoGain.h; sourceTree = "<group>"; };
-		147627FF1A35C22D0037EB17 /* File.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = File.cpp; sourceTree = "<group>"; };
-		147628001A35C22D0037EB17 /* File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = File.h; sourceTree = "<group>"; };
 		147628011A35C22D0037EB17 /* Filter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Filter.cpp; sourceTree = "<group>"; };
 		147628021A35C22D0037EB17 /* Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Filter.h; sourceTree = "<group>"; };
 		147628071A35CD2F0037EB17 /* oscRecieve.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = oscRecieve.cpp; sourceTree = "<group>"; };
@@ -948,11 +951,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				142714111A379F6800EF6891 /* Cocoa.framework in Frameworks */,
 				49DA52A22CDF7674A4F6275A /* Accelerate.framework in Frameworks */,
 				7B5CFC09C5AD5F2DA5D3FFA5 /* AudioToolbox.framework in Frameworks */,
 				1447F74A1A363DB500E32F30 /* liboscpack.so.1.1.0 in Frameworks */,
 				C16CAAAFB09DC4FAD1B643A3 /* Carbon.framework in Frameworks */,
-				1F7985E89BF46002E8119A58 /* Cocoa.framework in Frameworks */,
 				3AEA5ABB29B18784D33BFC4C /* CoreAudio.framework in Frameworks */,
 				FD4D3D44EF8DF1BB50248C7D /* CoreMIDI.framework in Frameworks */,
 				4A7D65149B76FB54DBD587F5 /* DiscRecording.framework in Frameworks */,
@@ -961,6 +964,7 @@
 				9ED754943F6D7D8F3E12D723 /* QTKit.framework in Frameworks */,
 				05573A40DEE472C5D057E1B0 /* QuartzCore.framework in Frameworks */,
 				75B4B587726EE72724964C18 /* WebKit.framework in Frameworks */,
+				1427140F1A378C7700EF6891 /* MultitouchSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2422,17 +2426,17 @@
 		DC82EFEB419760FF9AD6B868 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				142714041A37394D00EF6891 /* sendMultiTouches.mm */,
 				147627FB1A35C22D0037EB17 /* AudioCallback.cpp */,
 				147627FC1A35C22D0037EB17 /* AudioCallback.h */,
 				147627FD1A35C22D0037EB17 /* AutoGain.cpp */,
 				147627FE1A35C22D0037EB17 /* AutoGain.h */,
-				147627FF1A35C22D0037EB17 /* File.cpp */,
-				147628001A35C22D0037EB17 /* File.h */,
 				147628011A35C22D0037EB17 /* Filter.cpp */,
 				147628021A35C22D0037EB17 /* Filter.h */,
 				AB3150853D77DD4BF7267D1D /* MainComponent.cpp */,
 				D197132EC3586975411F7349 /* MainComponent.h */,
 				F2DE2ABB32E83DBFD665FA6C /* Main.cpp */,
+				142713FF1A36FE8F00EF6891 /* sendThread.h */,
 				147628071A35CD2F0037EB17 /* oscRecieve.cpp */,
 				147628081A35CD2F0037EB17 /* oscRecieve.h */,
 			);
@@ -2546,6 +2550,8 @@
 		E8F1719618FE22EDCF16524A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1427140E1A378C7700EF6891 /* MultitouchSupport.framework */,
+				1427140C1A378B3A00EF6891 /* Foundation.framework */,
 				1447F7491A363DB500E32F30 /* liboscpack.so.1.1.0 */,
 				1C87A400BA73C5F68E958E53 /* Accelerate.framework */,
 				014DB5799BED6D68FAB42A75 /* AudioToolbox.framework */,
@@ -2774,7 +2780,6 @@
 				CF0D7D1C2565F6B4691BD311 /* juce_audio_formats.mm in Sources */,
 				3E3FA1BD38CD41492ED4B035 /* juce_audio_processors.mm in Sources */,
 				56A6BF2C811D33A2800F88BE /* juce_core.mm in Sources */,
-				147628051A35C22D0037EB17 /* File.cpp in Sources */,
 				C9DEEB8584659DAF423F425D /* juce_cryptography.mm in Sources */,
 				EF16A7A1CFD4975404629C96 /* juce_data_structures.mm in Sources */,
 				2F26BB2BFD26A95904322AA7 /* juce_events.mm in Sources */,
@@ -2784,6 +2789,7 @@
 				C8BBF0058C692349FB8F985A /* juce_opengl.mm in Sources */,
 				D261948B8175242F8D30CEF6 /* juce_video.mm in Sources */,
 				147628091A35CD2F0037EB17 /* oscRecieve.cpp in Sources */,
+				142714001A37028F00EF6891 /* sendThread.h in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2798,6 +2804,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
@@ -2874,6 +2885,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
 				DEAD_CODE_STRIPPING = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PREPROCESSOR_DEFINITIONS = "";

@@ -24,8 +24,8 @@
 class MainContentComponent;
 
 
-class oscListener : public osc::OscPacketListener,
-                    public Thread
+class oscListener : public Thread,
+                    public osc::OscPacketListener
 {
     
 public:
@@ -52,7 +52,6 @@ private:
     int incomingPort = 9109;
     
     JUCE_LEAK_DETECTOR(oscListener);
-    
 
 protected:
     void ProcessMessage( const osc::ReceivedMessage& m, const IpEndpointName&

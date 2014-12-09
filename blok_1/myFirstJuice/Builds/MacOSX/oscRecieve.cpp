@@ -6,16 +6,14 @@
 //
 //
 
-
 #include "oscRecieve.h"
 #include "mainComponent.h"
 
 oscListener::oscListener(MainContentComponent * const owner) :
     Thread("OscListener Thread"),
     parent(owner), 
-//    s(IpEndpointName("localhost", incomingPort), this)
-    s(IpEndpointName(IpEndpointName::ANY_ADDRESS, IpEndpointName::ANY_PORT), this)
-
+    s(IpEndpointName("localhost", incomingPort), this)
+//    s(IpEndpointName(IpEndpointName::ANY_ADDRESS, incomingPort), this)
 {}
 
 void oscListener::ProcessMessage(const osc::ReceivedMessage &m, const IpEndpointName&
@@ -27,22 +25,9 @@ void oscListener::ProcessMessage(const osc::ReceivedMessage &m, const IpEndpoint
     
     try {
         
-//    osc::ReceivedMessageArgumentStream args = m.ArgumentStream();
-//    
-//    if( std::strcmp( m.AddressPattern(), "/finger" ) == 0 ){
-//
-//        args >> state >> xPos >> yPos >> osc::EndMessage;
-//        
-//        callBackToMainApp(xPos, yPos);
-//        
-//        std::cout << "received '/finger' message with arguments: "
-//        << state << " " << xPos << " " << yPos << " " << "\n";
-//        
-//    } else
-        
         String msgPattern = m.AddressPattern();
         
-        if (msgPattern.equalsIgnoreCase("/finger"))
+        if (msgPattern == "/finger")
         {
             // we need three arguments for button presses
             const int numArgs = m.ArgumentCount();
@@ -67,8 +52,4 @@ void oscListener::callBackToMainApp(float x, float y)
 {
     parent->oscCallback(x, y);
 }
-
-
-
-//#endif /* NO_OSC_TEST_MAIN */
 
