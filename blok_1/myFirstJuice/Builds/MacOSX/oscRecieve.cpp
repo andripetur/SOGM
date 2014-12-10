@@ -50,6 +50,6 @@ void oscListener::ProcessMessage(const osc::ReceivedMessage &m, const IpEndpoint
 
 void oscListener::callBackToMainApp(float x, float y)
 {
-    parent->oscCallback(x, y);
+//    parent->oscCallback(x, y);
 }
 

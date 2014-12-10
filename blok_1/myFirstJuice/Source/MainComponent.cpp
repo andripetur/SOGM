@@ -5,6 +5,8 @@
 
   ==============================================================================
 */
+#ifndef MAIN_COMPONENT_CPP
+#define MAIN_COMPONENT_CPP
 
 #include "MainComponent.h"
 #include "../Builds/MacOSX/sendMultiTouches.mm"
@@ -20,26 +22,15 @@ void *StartOsc(void *threadid)
     pthread_exit(NULL);
 }
 
-void *quitOsc(void *threadid)
-{
-    system("oscKiller");
-    pthread_exit(NULL);
-}
-
 //==============================================================================
-MainContentComponent::MainContentComponent() : listener(this) /*, trackpad() */
+MainContentComponent::MainContentComponent()
+                    :   rerouter(this)
 {
     pthread_create(&threads[0], NULL, StartOsc, (void *)0);
     
 
     startAudioCallback();
-    
-//    trackpad.startThread();
-    
-    sender.startThread();
-    listener.startThread();
-    DBG("OSC thread started");
-    
+            
     setSize (500, 400);
     startTimer(33);
     
@@ -55,10 +46,6 @@ MainContentComponent::~MainContentComponent()
     stopAudioCallback();
     
     pthread_cancel(threads[0]); //close thread
-    
-//    pthread_create(&threads[1], NULL, quitOsc, (void *)1);
-//    system("oscKiller");
-
     
 }
 
@@ -104,6 +91,7 @@ void MainContentComponent::mouseDown (const MouseEvent& event)
 
 void MainContentComponent::mouseCallback(int state, float x, float y)
 {
+    
     yPosOnTrackPad = y;
     xPosOnTrackPad = x;
     
@@ -115,8 +103,9 @@ void MainContentComponent::timerCallback()
     repaint();
 }
 
-void MainContentComponent::oscCallback(float x, float y)
+void MainContentComponent::rerouteCallback(int id, float x, float y)
 {
+    
     xPosOnTrackPad = x;
     yPosOnTrackPad = y;
     
@@ -137,4 +126,6 @@ void MainContentComponent::resized()
     middleX = getWidth()/2;
     middleY = getHeight()/2;
 }
+
+#endif
 

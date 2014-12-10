@@ -2,9 +2,11 @@
 #define TRACKPAD_LISTENER
 
 #include <iostream>
+#include "../Source/MainComponent.cpp"
 //#include <math.h>
 //#include <unistd.h>
 #include <CoreFoundation/CoreFoundation.h>
+
 
 typedef struct { float x,y; } mtPoint;
 typedef struct { mtPoint pos,vel; } mtReadout;
@@ -16,7 +18,7 @@ typedef struct {
 	mtReadout normalized;
 	float size;
 	int zero1;
-	float angle, majorAxis, minorAxis; // ellipsoid
+	float angle, majorAxis, minorAxis;
 	mtReadout mm;
 	int zero2[2];
 	float unk2;
@@ -53,29 +55,6 @@ void threadThang() {
     sleep(-1);
     
 }
-
-
-//////forward decleration
-//class MainContentComponent;
-
-//class trackPadListener : public Thread
-//{
-//    
-//public:
-//
-//    trackPadListener() : Thread("TrackPad Listener")
-//    {}
-//    
-//    ~trackPadListener()
-//    {
-//        stopThread(2000);
-//    }
-//    
-//    void run()
-//    {
-//    }
-//
-//};
 
 #endif
 

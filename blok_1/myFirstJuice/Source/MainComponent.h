@@ -14,7 +14,7 @@
 #include "filter.h"
 #include "AutoGain.h"
 #include "oscRecieve.h"
-#include "sendThread.h" 
+#include "consoleRerouter.h"
 
 #include <stdlib.h>
 #include <pthread.h>
@@ -35,7 +35,7 @@ public:
     void paint (Graphics&);
     void resized();
     
-    void oscCallback(float x, float y);
+    void rerouteCallback(int id, float x, float y);
     void mouseCallback(int state, float x, float y);
     
     void mouseDown(const MouseEvent& event);
@@ -60,9 +60,7 @@ private:
     pthread_t threads[2];
     int OSC_PID;
     
-    oscListener listener;
-//    trackPadListener trackpad;
-    sendThread sender;
+    consoleRerouter rerouter;
     
     Filter filter;
     AutoGain gain;

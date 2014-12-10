@@ -8,7 +8,6 @@
 
 #include "Filter.h"
 
-
 Filter::Filter()
 {
     setFilterFreq(8000);
