@@ -5,7 +5,6 @@
 
   ==============================================================================
 */
-
 #ifndef MAINCOMPONENT_H_INCLUDED
 #define MAINCOMPONENT_H_INCLUDED
 
@@ -13,12 +12,9 @@
 #include "AudioCallback.h"
 #include "filter.h"
 #include "AutoGain.h"
-#include "oscRecieve.h"
-#include "consoleRerouter.h"
 
 #include <stdlib.h>
 #include <pthread.h>
-
 
 //==============================================================================
 /*
@@ -36,7 +32,7 @@ public:
     void resized();
     
     void rerouteCallback(int id, float x, float y);
-    void mouseCallback(int state, float x, float y);
+    void isFingerDown();
     
     void mouseDown(const MouseEvent& event);
     
@@ -52,6 +48,9 @@ private:
     int middleX;
     int middleY;
     
+    float windowWidth;
+    float windowHeight; 
+    
     float xPosOnTrackPad;
     float yPosOnTrackPad;
     
@@ -60,8 +59,8 @@ private:
     pthread_t threads[2];
     int OSC_PID;
     
-    consoleRerouter rerouter;
-    
+    bool fingersToDraw[10];
+        
     Filter filter;
     AutoGain gain;
     

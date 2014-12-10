@@ -24,18 +24,20 @@ void *StartOsc(void *threadid)
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
-                    :   rerouter(this)
+//                    :   rerouter(this)
 {
     pthread_create(&threads[0], NULL, StartOsc, (void *)0);
     
-
     startAudioCallback();
             
     setSize (500, 400);
-    startTimer(33);
+    startTimer(45);
     
-    middleX = getWidth()/2;
-    middleY = getHeight()/2;
+    windowWidth = getWidth();
+    windowHeight = getHeight();
+    
+    middleX = windowWidth/2;
+    middleY = windowHeight/2;
     
     filter.printCoeffs();
     
@@ -58,12 +60,18 @@ void MainContentComponent::paint (Graphics& g)
     
     float offsetWidth = fabs(currentSample) * 50;
     
-    if(newMsg){
-    std::cout << "x: " << xPosOnTrackPad <<" "<< "y: " << yPosOnTrackPad << std::endl;
-    setNewMsg(false);
+    for(int i = 0; i < 10; i++) {
+        if(fingersToDraw[i] == true) {
+            float ringX = globalExPosition[i]*windowWidth;
+            float ringY = (globalWhyPosition[i]*-windowHeight)+windowHeight;
+            
+            g.drawEllipse(ringX, ringY, offsetWidth, offsetWidth, 50);
+        }
+        isTheFingerThere[i] = false;
+        fingersToDraw[i] = false;
     }
     
-    g.drawEllipse(middleX, middleY, offsetWidth, offsetWidth, 50);
+//    g.drawEllipse(middleX, middleY, offsetWidth, offsetWidth, 50);
     
     
 }
@@ -72,6 +80,12 @@ void MainContentComponent::audioCallback(float **buffer, int channels, int frame
 {
     //CrazyDrawing
     currentSample = buffer [channels-1][frames-1];
+    
+    for(int i = 0; i < 10; i++) {
+        if(isTheFingerThere[i] == true) {
+            fingersToDraw[i] = true;
+        }
+    }
 
     filter.process(buffer, channels, frames);
     gain.process(buffer, channels, frames);
@@ -89,13 +103,9 @@ void MainContentComponent::mouseDown (const MouseEvent& event)
 {
 }
 
-void MainContentComponent::mouseCallback(int state, float x, float y)
+void MainContentComponent::isFingerDown()
 {
     
-    yPosOnTrackPad = y;
-    xPosOnTrackPad = x;
-    
-    setNewMsg(true);
 }
 
 void MainContentComponent::timerCallback()

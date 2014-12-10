@@ -2,11 +2,13 @@
 #define TRACKPAD_LISTENER
 
 #include <iostream>
-#include "../Source/MainComponent.cpp"
-//#include <math.h>
-//#include <unistd.h>
 #include <CoreFoundation/CoreFoundation.h>
 
+//--Global Variables-----------------------------------------------
+bool isTheFingerThere[10];
+int globalFingerID[10];
+float globalExPosition[10];
+float globalWhyPosition[10];
 
 typedef struct { float x,y; } mtPoint;
 typedef struct { mtPoint pos,vel; } mtReadout;
@@ -37,12 +39,15 @@ int callback(int device, Finger *data, int nFingers, double timestamp, int frame
 	for (int i=0; i<nFingers; i++) {
 		Finger *f = &data[i];
 		
-		
-		int identifier = f->identifier;
 		float x = f->normalized.pos.x;
 		float y = f->normalized.pos.y;
         
-        std::cout << identifier << " " << x << " " << y << " " << std::endl;
+        isTheFingerThere[i] = true;
+        globalExPosition[i] = x;
+        globalWhyPosition[i] = y;
+        
+        std::cout << nFingers << std::endl;
+//        std::cout << identifier << " " << x << " " << y << " " << std::endl;
         
     }
     return 0;
