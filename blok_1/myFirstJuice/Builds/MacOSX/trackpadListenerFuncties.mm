@@ -9,6 +9,7 @@ bool isTheFingerThere[10];
 int globalFingerID[10];
 float globalExPosition[10];
 float globalWhyPosition[10];
+float lastXposition;
 
 typedef struct { float x,y; } mtPoint;
 typedef struct { mtPoint pos,vel; } mtReadout;
@@ -46,7 +47,9 @@ int callback(int device, Finger *data, int nFingers, double timestamp, int frame
         globalExPosition[i] = x;
         globalWhyPosition[i] = y;
         
-        std::cout << nFingers << std::endl;
+        lastXposition = x;
+        
+//        std::cout << nFingers << std::endl;
 //        std::cout << identifier << " " << x << " " << y << " " << std::endl;
         
     }
@@ -58,7 +61,12 @@ void threadThang() {
     MTRegisterContactFrameCallback(dev, callback);
     MTDeviceStart(dev, 0);
     sleep(-1);
-    
+}
+
+void *trackpadListener(void *threadid)
+{
+    threadThang();
+    pthread_exit(NULL);
 }
 
 #endif

@@ -117,7 +117,7 @@
 		138132682D1C4419917A9CBD /* juce_AudioIODeviceType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_AudioIODeviceType.h; path = ../../JuceLibraryCode/modules/juce_audio_devices/audio_io/juce_AudioIODeviceType.h; sourceTree = SOURCE_ROOT; };
 		138F8A2E0D2EE2762C56425A /* juce_BasicNativeHeaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_BasicNativeHeaders.h; path = ../../JuceLibraryCode/modules/juce_core/native/juce_BasicNativeHeaders.h; sourceTree = SOURCE_ROOT; };
 		13FB28DEC053F743E0769BB1 /* juce_opengl.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = juce_opengl.mm; path = ../../JuceLibraryCode/modules/juce_opengl/juce_opengl.mm; sourceTree = SOURCE_ROOT; };
-		142714041A37394D00EF6891 /* sendMultiTouches.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = sendMultiTouches.mm; sourceTree = "<group>"; };
+		142714041A37394D00EF6891 /* trackpadListenerFuncties.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = trackpadListenerFuncties.mm; sourceTree = "<group>"; };
 		1427140C1A378B3A00EF6891 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1427140E1A378C7700EF6891 /* MultitouchSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultitouchSupport.framework; path = ../../../../../../../../../System/Library/PrivateFrameworks/MultitouchSupport.framework; sourceTree = "<group>"; };
 		142FCCCD0AFE11D24E0AF368 /* juce_SystemStats.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_SystemStats.h; path = ../../JuceLibraryCode/modules/juce_core/system/juce_SystemStats.h; sourceTree = SOURCE_ROOT; };
@@ -2372,7 +2372,7 @@
 		DC82EFEB419760FF9AD6B868 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				142714041A37394D00EF6891 /* sendMultiTouches.mm */,
+				142714041A37394D00EF6891 /* trackpadListenerFuncties.mm */,
 				147627FB1A35C22D0037EB17 /* AudioCallback.cpp */,
 				147627FC1A35C22D0037EB17 /* AudioCallback.h */,
 				147627FD1A35C22D0037EB17 /* AutoGain.cpp */,

@@ -35,17 +35,21 @@ void Filter::setFilterMode(int filterMode)
     
 } // setFilterMode
 
-void Filter::setFilterFreq(double freq)
+void Filter::setFilterFreq(int freq)
 {
     lastFilterFreq = filterFreq;
     filterFreq = freq;
     
-   CalculateCoeff(filterFreq);
+    printCoeffs();
+    CalculateCoeff(filterFreq);
     
 }
 
 void Filter::process(float **buffer, int channels, int frames)
 {
+    std::cout << "Channels: " << channels << " " <<
+                 "frames: " << frames << std::endl;
+    
     for (int ch = 0; ch < channels; ch++) {
         for (int fr = 0; fr < frames; fr++) {
             

@@ -17,7 +17,7 @@ class Filter
 public:
     Filter();
     void setFilterMode(int filterMode);
-    void setFilterFreq(double freq);
+    void setFilterFreq(int freq);
     
     void printCoeffs(); 
     void process(float **buffer, int channels, int frames);
@@ -37,6 +37,9 @@ private:
     
     float leftOutBuffer[3];
     float rightOutBuffer[3];
+    
+    float oldFilter[4][1024];
+    float newFilter[4][1024];
     
     double a0, a1, a2;
     double b0, b1, b2;
