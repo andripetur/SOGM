@@ -18,14 +18,16 @@ public:
     void process(float **buffer, int channels, int frames);
     void printGain();
     
-    float averageValue(float **buffer, int channels, int frames);
+    float averageValue(float buffer[2][1024], int channels, int frames);
     
 private:
     float feedbackLowLimit = 4.9;
-    float feedbackHighLimit = 8;
+    float feedbackHighLimit = 18.0;
     
-    float gainer = 1;
+    float tempBuffer[2][1024];
     
+    float avg = 0; 
+    double gainer = 1;
     
     
 };

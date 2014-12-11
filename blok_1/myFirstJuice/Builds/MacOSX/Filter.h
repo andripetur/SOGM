@@ -16,13 +16,14 @@ class Filter
 {
 public:
     Filter(float theSamplerate);
+    
     void setFilterMode(int filterMode);
-    void setFilterFreq(int freq);
+    void setFilterFreq(double freq);
     
-    void printCoeffs(); 
+    void setFilterQ(double q);
+    
     void process(float **buffer, int channels, int frames);
-    
-    void shiftBufferLeft(float *buffer);
+    void printCoeffs();
     
 private:
     int lastFilterMode;
@@ -31,9 +32,14 @@ private:
     double filterFreq;
     double lastFilterFreq;
     
-    float calculateSample(float inBuffer[], float outBuffer[]);
-    void CalculateCoeff(double Fc);
+    double filterQ;
+    double lastFilterQ;
     
+    float calculateSample(float inBuffer[], float outBuffer[]);
+    void CalculateBuffer(float **buffer, int channels, int frames);
+    void CalculateCoeff(int centerFrequency);
+    
+    void shiftBufferLeft(float *buffer, float newSample);
     void xFadeBuffers(float **outputBuffer, float oBuf[2][1024], float nBuf[2][1024],
                       int channels, int frames);
 

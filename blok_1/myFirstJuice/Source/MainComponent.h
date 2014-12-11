@@ -11,7 +11,7 @@
 #include <math.h>
 #include <stdio.h>
 
-class MainContentComponent   : public Component, private Timer , public ChangeBroadcaster, private AudioCallback
+class MainContentComponent   : public Component, private Timer , private AudioCallback
 {
 public:
     MainContentComponent();
@@ -26,7 +26,11 @@ private:
     void timerCallback();
     void audioCallback (float** buffer, int channels, int frames);
     
-    double freq = 100;
+    double paddedFrequency;
+    double paddedQ;
+    
+    float internalX;
+    float internalY;
     
     Filter filter;
     AutoGain gain;
