@@ -8,9 +8,13 @@
 
 #include "Filter.h"
 
-Filter::Filter()
+Filter::Filter(float theSamplerate) : samplerate(theSamplerate)
 {
-    setFilterFreq(8000);
+//    setFilterFreq(8000);
+    setFilterFreq(6000);
+//    setFilterFreq(4000);
+//    setFilterFreq(1000);
+//    setFilterFreq(500);
     
     for (int i = 0; i < 3; i++) {
         leftBuffer[i] = 0.0;
@@ -18,14 +22,13 @@ Filter::Filter()
         
         leftOutBuffer[i] = 0.0;
         rightOutBuffer[i] = 0.0;
+        
+        oldLeftBuffer[i] = 0.0;
+        oldRightBuffer[i] = 0.0;
+        
+        oldLeftOutBuffer[i] = 0.0;
+        oldRightOutBuffer[i] = 0.0;
     }
-    
-//    a0 = 0.2513790015131591;
-//    a1 = 0.5027580030263182;
-//    a2 = 0.2513790015131591;
-//    b1 = -0.17124971441396285;
-//    b2 = 0.1767567204665992;
-//    b0 = 0.9;
 }
 
 void Filter::setFilterMode(int filterMode)
@@ -47,43 +50,114 @@ void Filter::setFilterFreq(int freq)
 
 void Filter::process(float **buffer, int channels, int frames)
 {
-    std::cout << "Channels: " << channels << " " <<
-                 "frames: " << frames << std::endl;
-    
-    for (int ch = 0; ch < channels; ch++) {
-        for (int fr = 0; fr < frames; fr++) {
-            
-            if(ch == 0){
-                //Shift all samples to the left. 
-                leftBuffer[0] = leftBuffer[1];
-                leftBuffer[1] = leftBuffer[2];
+
+    if ( lastFilterFreq == filterFreq )
+    {
+        CalculateCoeff(filterFreq);
+        for (int ch = 0; ch < channels; ch++) {
+            for (int fr = 0; fr < frames; fr++) {
                 
-                leftOutBuffer[0] = leftOutBuffer[1];
-                leftOutBuffer[1] = leftOutBuffer[2];
-                
-                leftBuffer[2] = buffer[ch][fr];
-                
-                buffer[ch][fr] = calculateSample(leftBuffer, leftOutBuffer);
-                
-            } else if (ch == 1) {
-                //Shift all samples to the left.
-                rightBuffer[0] = rightBuffer[1];
-                rightBuffer[1] = rightBuffer[2];
-                
-                rightOutBuffer[0] = rightOutBuffer[1];
-                rightOutBuffer[1] = rightOutBuffer[2];
-                
-                rightBuffer[2] = buffer[ch][fr];
-                
-                buffer[ch][fr] = calculateSample(rightBuffer, rightOutBuffer);
+                if(ch == 0){
+                    shiftBufferLeft(&oldLeftBuffer[3]);
+                    shiftBufferLeft(&oldLeftOutBuffer[3]);
+                    
+                    oldLeftOutBuffer[2] = buffer[ch][fr];
+                    
+                    buffer[ch][fr] = calculateSample(oldLeftBuffer,oldLeftOutBuffer);
+                    
+                } else if (ch == 1) {
+                    shiftBufferLeft(&oldRightBuffer[3]);
+                    shiftBufferLeft(&oldRightOutBuffer[3]);
+                    
+                    oldRightOutBuffer[2] = buffer[ch][fr];
+                    
+                    buffer[ch][fr] = calculateSample(oldRightBuffer,oldRightOutBuffer);
+                }
             }
         }
-    }
+    } else {
+        CalculateCoeff(lastFilterFreq);
+        
+        for (int ch = 0; ch < channels; ch++) {
+            for (int fr = 0; fr < frames; fr++) {
+                
+                if(ch == 0) {
+                    shiftBufferLeft(&oldLeftBuffer[3]);
+                    shiftBufferLeft(&oldLeftOutBuffer[3]);
+                    
+                    oldLeftOutBuffer[2] = buffer[ch][fr];
+                    
+                    oldFilter[ch][fr] = calculateSample(oldLeftBuffer,oldLeftOutBuffer);
+                }
+                
+                if(ch == 1) {
+                    shiftBufferLeft(&oldRightBuffer[3]);
+                    shiftBufferLeft(&oldRightOutBuffer[3]);
+                    
+                    oldRightOutBuffer[2] = buffer[ch][fr];
+                    
+                    oldFilter[ch][fr] = calculateSample(oldRightBuffer,oldRightOutBuffer);
+                }
+            }
+        } // fill oldBuffer
+        
+        CalculateCoeff(filterFreq);
+        
+        for (int ch = 0; ch < channels; ch++) {
+            for (int fr = 0; fr < frames; fr++) {
+                
+                if(ch == 0){
+                    shiftBufferLeft(&leftBuffer[3]);
+                    shiftBufferLeft(&leftOutBuffer[3]);
+                    
+                    leftBuffer[2] = buffer[ch][fr];
+                    
+                    newFilter[ch][fr] = calculateSample(leftBuffer, leftOutBuffer);
+                    
+                } else if (ch == 1) {
+                    shiftBufferLeft(&rightBuffer[3]);
+                    shiftBufferLeft(&rightOutBuffer[3]);
+                    
+                    rightBuffer[2] = buffer[ch][fr];
+                    
+                    newFilter[ch][fr] = calculateSample(rightBuffer, rightOutBuffer);
+                }
+            }
+        } // fill newBuffer
+
+        xFadeBuffers(buffer, oldFilter, newFilter, channels, frames);
+    
+//        for (int i = 0; i < 3; i++) {
+//            int offset = (i * -1)+3;
+//            
+//            leftOutBuffer[i] = buffer[0][frames-offset];
+//            rightOutBuffer[i] = buffer[1][frames-offset];
+//            
+//            oldLeftOutBuffer[i] = leftOutBuffer[i];
+//            oldRightOutBuffer[i] = oldRightOutBuffer[i];
+//            
+//            leftBuffer[i] = 0.0;
+//            rightBuffer[i] = 0.0;
+//            
+//            leftOutBuffer[i] = 0.0;
+//            rightOutBuffer[i] = 0.0;
+//            
+//        }
+        
+    } // if
+    
+    lastFilterFreq = filterFreq;
 }//process()
+
+void Filter::shiftBufferLeft(float *buffer)
+{
+    buffer[0] = buffer[1];
+    buffer[1] = buffer[2];
+}
+
 
 float Filter::calculateSample(float x[], float y[])
 {
-    
     int n = 2;
     
     y[n] = (a0*x[n] +
@@ -98,13 +172,29 @@ float Filter::calculateSample(float x[], float y[])
     
 } // calculateSample()
 
-void Filter::CalculateCoeff(double Fc)
+void Filter::xFadeBuffers(float **outputBuffer, float oBuf[2][1024], float nBuf[2][1024],
+                      int channels, int frames)
 {
-    Fc /= 44100;
+    float fadeInVal = 1/frames;
+    float fadeOutVal = -1/frames;
     
+    for (int ch = 0; ch < channels; ch++) {
+        for (int fr = 0; fr < frames; fr++) {
+            
+            oBuf[ch][fr] *= ( fadeOutVal * fr )+1.0;
+            nBuf[ch][fr] *= fadeInVal * fr;
+            
+            outputBuffer[ch][fr] = oBuf[ch][fr] + nBuf[ch][fr];
+        }
+    }
+
+} // xFadeBuffers
+
+void Filter::CalculateCoeff(double centerFreq)
+{    
     double Q = 0.7071;
     double norm;
-    double K = tan(M_PI * Fc);
+    double K = tan(M_PI * centerFreq/samplerate);
 
     norm = 1 / (1 + K / Q + K * K);
     a0 = K * K * norm;

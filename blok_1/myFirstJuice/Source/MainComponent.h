@@ -20,8 +20,6 @@ public:
     void paint (Graphics&);
     void resized();
     
-    void isFingerDown();
-    
     void mouseDown(const MouseEvent& event);
         
 private:

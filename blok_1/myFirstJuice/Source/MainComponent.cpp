@@ -4,12 +4,13 @@
 #include "MainComponent.h"
 #include "../Builds/MacOSX/trackpadListenerFuncties.mm"
 
-//==============================================================================
-MainContentComponent::MainContentComponent()
+MainContentComponent::MainContentComponent() : filter(getSampleRate())
 {
     //thread for trackpadlistener
     pthread_create(&threads[0], NULL, trackpadListener, (void *)0);
     
+    //Disable swipe gestures
+    system("killall -STOP Dock");
     startAudioCallback();
     
     //Height=width * 0.72380952;
@@ -30,7 +31,11 @@ MainContentComponent::~MainContentComponent()
 {
     stopAudioCallback();
     
-    pthread_cancel(threads[0]); //close thread
+    //Stop trackpad listener thread
+    pthread_cancel(threads[0]);
+    
+    //Re-enable swipe gestures
+    system("killall -CONT Dock");
     
 }
 
@@ -62,25 +67,26 @@ void MainContentComponent::paint (Graphics& g)
 void MainContentComponent::audioCallback(float **buffer, int channels, int frames)
 {
     //Get some values to draw fingers and such.
-    for(int i = 0; i < 10; i++) {
+    for(int i = 0; i < 10; i++)
+    {
         shapeSample[i] = buffer [channels-1][frames-10*(i+1)];
+        
         if(isTheFingerThere[i] == true) {
             fingersToDraw[i] = true;
         }
     }
     
-    if(lastXposition < 0.5){
-        filter.setFilterFreq(8000);
-    } else {
-        filter.setFilterFreq(4000);
-    }
+//    if(lastXposition < 0.5){
+//        filter.setFilterFreq(8000);
+//    } else {
+//        filter.setFilterFreq(4000);
+//    }
 
     filter.process(buffer, channels, frames);
     gain.process(buffer, channels, frames);
     
-//    gain.printGain();
+    gain.printGain();
     
-
 }
 
 
@@ -88,15 +94,12 @@ void MainContentComponent::mouseDown (const MouseEvent& event)
 {
 }
 
-void MainContentComponent::isFingerDown()
-{
-    
-}
 
 void MainContentComponent::timerCallback()
 {
     repaint();
 }
+
 
 void MainContentComponent::resized()
 {
