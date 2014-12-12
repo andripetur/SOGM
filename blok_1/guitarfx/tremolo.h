@@ -10,6 +10,8 @@ public:
     void setFreq(float frequency);
     void process();
     
+    void printInfo();
+    
 private:
     float modDepth;
     float frequency;

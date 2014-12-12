@@ -22,3 +22,10 @@ void Distortion::process(float input)
     cout << "Output gain is: " << outputGain << endl;
     cout << endl;
 }
+
+void Distortion::printInfo()
+{
+    cout << "Im a Distortion: " << endl;
+    cout << "Input gain is: " << getLevel() << endl;
+    cout << "Output gain is: " << outputGain << endl;    
+}

@@ -11,43 +11,9 @@
 enum {NOINPUT = 0, AMPLIFIER, TREMOLO, DISTORTION};
 enum {ARG_NAME = 0, ARG_WHICH_EFFECT, ARG_LEVEL, ARG_FREQ, ARG_DEPTH};
 
-void printInfo(int chosenEffect) {
-    
-    switch (chosenEffect) {
-        
-        case NOINPUT:
-            std::cout << "This program needs arguments to run." << std::endl;
-            std::cout << "1. Type of effect" << std::endl;
-            std::cout << "You can choose from: " << std::endl;
-            std::cout << "  AMPLIFIER: -a " << std::endl;
-            std::cout << "  TREMOLO: -t " << std::endl;
-            std::cout << "  DISTORTION: -d " << std::endl;
-            std::cout << "Try again, with fx to get further usage info  " << std::endl;
-            break;
-            
-        case AMPLIFIER:
-            std::cout << "This program needs 2 arguments to run." << std::endl;
-            std::cout << "1.Type effect: AMPLIFIER, TREMOLO or DISTORTION" << std::endl;
-            std::cout << "2. Level" << std::endl;
-            break;
-            
-        case TREMOLO:
-            std::cout << "This program needs 4 arguments to run." << std::endl;
-            std::cout << "1.Type effect: AMPLIFIER, TREMOLO or DISTORTION" << std::endl;
-            std::cout << "2. Level" << std::endl;
-            std::cout << "3. Frequency" << std::endl;
-            std::cout << "4. Depth" << std::endl;
-            break;
-            
-        case DISTORTION:
-            std::cout << "This program needs at least 2 arguments to run." << std::endl;
-            std::cout << "1.Type effect: AMPLIFIER, TREMOLO or DISTORTION" << std::endl;
-            std::cout << "2. Level" << std::endl;
-            std::cout << "3. OutputGain" << std::endl;
-            break;
-            
-    }
-} //printInfo
+Amplifier* effect;
+
+void printInfo(int chosenEffect);
 
 using namespace std;
 
@@ -58,37 +24,72 @@ int main(int argc, char** argv)
     if (argc == 1) {
         printInfo(NOINPUT);
     }
-    else if (argc > 1)
+    else if (argc == 2)
     {
         if (strcmp(argv[1], "-a") == 0)
         {
             chosenEffect = AMPLIFIER;
+            effect = new Amplifier();
         }
         else if (strcmp(argv[1], "-t") == 0)
         {
             chosenEffect = TREMOLO;
+            effect = new Tremolo();
         }
         else if (strcmp(argv[1], "-d") == 0)
         {
             chosenEffect = DISTORTION;
+            effect = new Distortion();
         }
         
+        printInfo(chosenEffect);
     }
     
-    printInfo(chosenEffect);
-    
-
-    
-    /*
-    Amplifier amp;
-    Tremolo trem;
-    Distortion dist;
-
-    amp.showLevel();
-    trem.process();
-    dist.process(0.5);
-     */
+    effect->printInfo();
     
     return 0;
 } // main()
+
+void printInfo(int chosenEffect) {
+    
+    switch (chosenEffect) {
+            
+        case NOINPUT:
+            std::cout << " " << std::endl;
+            std::cout << "This program needs arguments to run." << std::endl;
+            std::cout << "  Usage: guitarfx [-effect]" << std::endl;
+            std::cout << "  Choose fx for more info" << std::endl;
+            std::cout << " " << std::endl;
+            
+            std::cout << "Available fx are: " << std::endl;
+            std::cout << "  AMPLIFIER: -a " << std::endl;
+            std::cout << "  TREMOLO: -t " << std::endl;
+            std::cout << "  DISTORTION: -d " << std::endl;
+            std::cout << " " << std::endl;
+            break;
+            
+        case AMPLIFIER:
+            std::cout << " " << std::endl;
+            std::cout << "This program needs 2 arguments to run." << std::endl;
+            std::cout << "Usage: guitarfx [-effect] [-l LEVEL]" << std::endl;
+            std::cout << " " << std::endl;
+            break;
+            
+        case TREMOLO:
+            std::cout << " " << std::endl;
+            std::cout << "This program needs 4 arguments to run." << std::endl;
+            std::cout << "Usage: guitarfx [-effect] [-l LEVEL] [-f FREQUENCY] [-d DEPTH]" << std::endl;
+            std::cout << " " << std::endl;
+            break;
+            
+        case DISTORTION:
+            std::cout << " " << std::endl;
+            std::cout << "This program needs 2 arguments to run." << std::endl;
+            std::cout << "Usage: guitarfx [-effect] [-l LEVEL] [-o OUTPOUTGAIN]" << std::endl;
+            std::cout << " " << std::endl;
+            break;
+            
+    }
+    
+} //printInfo
 

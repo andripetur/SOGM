@@ -19,10 +19,18 @@ void Tremolo::setFreq(float frequency)
 
 void Tremolo::process()
 {
-    cout << "Tremolo: " << endl;
+    cout << "Im a Tremolo: " << endl;
     cout << "I'm processing " << endl;
     cout << "With a depth of:" << modDepth << endl;
     cout << "And a frequency of: " << frequency << endl;
     cout << endl;
     
+}
+
+void Tremolo::printInfo()
+{
+    cout << "Im a Tremolo: " << endl;
+    cout << "With a depth of:" << modDepth << endl;
+    cout << "And a frequency of: " << frequency << endl;
+    cout << endl;
 }

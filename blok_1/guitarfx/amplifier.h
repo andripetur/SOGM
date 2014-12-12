@@ -14,6 +14,8 @@ public:
     long getLevel();
     void process();
     
+    virtual void printInfo();
+    
 private:
     long level;
 }; // Amplifier{}

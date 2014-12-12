@@ -25,5 +25,9 @@ void Amplifier::setLevel(long level)
 void Amplifier::process()
 {
     cout << "I'm processing " << endl;
+}
 
+void Amplifier::printInfo() {
+    cout << "Im an amplifier. " << endl;
+    cout << "My level is: "<< level << endl;
 }
