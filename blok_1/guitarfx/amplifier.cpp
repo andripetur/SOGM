@@ -17,6 +17,11 @@ long Amplifier::getLevel()
     return level;
 }
 
+void Amplifier::setLevel(long level)
+{
+    this->level=level;
+}
+
 void Amplifier::process()
 {
     cout << "I'm processing " << endl;
