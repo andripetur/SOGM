@@ -68,6 +68,7 @@ int main(int argc, char** argv)
                 long uilevel = atoi(argv[3]);
                 effect->setLevel(uilevel);
             }
+            
         }
         
     } // if

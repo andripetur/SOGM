@@ -32,7 +32,7 @@ void Amplifier::process(float* buffer, int bufferframes)
         buffer[i] = clip(buffer[i]);
         
     } // for
-    
+        
 }//process()
 
 float Amplifier::clip(float input)
@@ -50,7 +50,7 @@ float Amplifier::clip(float input)
 }
 
 void Amplifier::printInfo() {
-    cout << "Im an amplifier. " << endl;
+    cout << "I'm an amplifier " << endl;
     cout << "My level is: "<< level << endl;
     cout << endl;
 }
