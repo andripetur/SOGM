@@ -1,14 +1,17 @@
-CC = g++
+CPP = g++
+CC = gcc
+
 CFLAGS = -Wall
-OBJ= amplifier.o tremolo.o distortion.o guitarfxmain.o
+OBJ = amplifier.o tremolo.o distortion.o guitarfxmain.o audio_io.o
+LIB = -lportaudio
 
 all: guitarfx
 
 guitarfx: $(OBJ)
-	$(CC) -o $@ $(CFLAGS) $(OBJ)
+	$(CPP) -o $@ $(CFLAGS) $(OBJ) $(LIB) -lpthread
 
 .cpp.o:
-	$(CC) -c $< $(CFLAGS)
+	$(CPP) -c $< $(CFLAGS)
 
 clean:
 	rm -f *.o
