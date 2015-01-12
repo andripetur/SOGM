@@ -12,7 +12,9 @@ public:
     void showLevel();
     
     long getLevel();
-    void process();
+    void process(float* buffer, int bufferframes);
+    
+    float clip(float input);
     
     virtual void printInfo();
     

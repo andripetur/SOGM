@@ -8,7 +8,7 @@ class Distortion : public Amplifier
 public:
     Distortion();
     void setOutputGain(float outputGain);
-    void process(float input);
+    void process(float* buffer, int bufferFrames);
     void printInfo();
     
 private:

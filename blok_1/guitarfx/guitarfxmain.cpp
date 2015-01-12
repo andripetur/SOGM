@@ -1,13 +1,12 @@
 #include <iostream>
 #include "audio_io.h"
-#include <unistd.h>
+//#include <unistd.h>
 #include "amplifier.h"
 #include "tremolo.h"
 #include "distortion.h"
 
-#define BUFFERSIZE 10
 #define SAMPLERATE 44100
-#define NROFCHANNELS 2
+#define NROFCHANNELS 1
 #define FRAMESPERBUFFER 1024
 
 enum {NOINPUT = 0, AMPLIFIER, TREMOLO, DISTORTION};
@@ -24,12 +23,18 @@ int main(int argc, char** argv)
     Audio_IO audiostream;
     
     int chosenEffect = 0;
-    int inputDevice = 0;
-    int outputDevice = 0;
+    int inputDevice = -1;
+    int outputDevice = -1;
 
-    float sampleBufferSize = FRAMESPERBUFFER * NROFCHANNELS;
+    float samplebuffer[FRAMESPERBUFFER];
+    float* bufptr = samplebuffer;
+
+    for ( int i = 0; i < FRAMESPERBUFFER; ++i){
+        samplebuffer[i] = 0;
+    }
     
     // Set up audiostream
+    audiostream.set_mode(AUDIO_IO_READWRITE);
     audiostream.set_samplerate(SAMPLERATE);
     audiostream.set_nrofchannels(NROFCHANNELS);
     audiostream.set_framesperbuffer(FRAMESPERBUFFER);
@@ -37,8 +42,9 @@ int main(int argc, char** argv)
     // Select audio effect.
     if (argc == 1) {
         printInfo(NOINPUT);
+        return -1;
     }
-    else if (argc == 2)
+    else if (argc > 1)
     {
         if (strcmp(argv[1], "-a") == 0)
         {
@@ -56,37 +62,57 @@ int main(int argc, char** argv)
             effect = new Distortion();
         }
         
+        if ( argc >= 3 ) {
+            if ( strcmp(argv[2], "-l") == 0)
+            {
+                long uilevel = atoi(argv[3]);
+                effect->setLevel(uilevel);
+            }
+        }
+        
+    } // if
+    
         printInfo(chosenEffect);
-    }
     
-    // Set in and output devices
-    audiostream.initialise();
-    audiostream.list_devices();
+        // Set in and output devices
+        audiostream.initialise();
+        audiostream.list_devices();
+        cout << endl;
+        
+        cout << "Give input device number: ";
+        cin >> inputDevice;
+        
+        if(audiostream.set_input_device(inputDevice) == -1)
+        {
+            cout << "Input device does not exist" << endl;
+            return -1;
+        }
+        
+        cout << "Give output device number: ";
+        cin >> outputDevice;
+        cout << endl;
     
-    cout << "Give input device number: ";
-    cin >> inputDevice;
+        if(audiostream.set_output_device(outputDevice) == -1)
+        {
+            cout << "Output device does not exist" << endl;
+            return -1;
+        }
+        audiostream.start_server();
+        
+        effect->printInfo();
     
-    if(audiostream.set_input_device(inputDevice) == -1){
-        cout << "Output device does not exist" << endl;
-        return -1;
-    }
+        cout << "Press ctrl c to stop program" << endl;
     
-    cout << "Give output device number: ";
-    cin >> outputDevice;
-    
-    if(audiostream.set_output_device(outputDevice) == -1){
-        cout << "Output device does not exist" << endl;
-        return -1;
-    }
-    audiostream.start_server();
-    
-    effect->printInfo();
-    
-    //Do processing
-    
-    
-    // Clean up
-    audiostream.finalise();
+        //Do processing
+        while(true) {
+            audiostream.read(samplebuffer);
+            effect->process(bufptr, FRAMESPERBUFFER);
+            audiostream.write(samplebuffer);
+        }
+        
+        // Clean up
+        audiostream.finalise();
+        
     return 0;
     
 } // main()
