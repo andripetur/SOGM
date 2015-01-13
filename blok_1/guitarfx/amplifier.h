@@ -18,6 +18,10 @@ public:
     
     virtual void printInfo();
     
+    virtual void setFreq(float freq){};
+    virtual void setOutputGain(float og){};
+    virtual void setDepth(float d){};
+    
 private:
     long level;
 }; // Amplifier{}
