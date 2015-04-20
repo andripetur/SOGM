@@ -5,6 +5,7 @@
 *.swp
 *.o
 *glosur.cpp
+*.rtf
 
 // For xCode 
 resources/
